@@ -1,41 +1,94 @@
-<form id="testForm">
-  <input name="entry.1279474398" placeholder="Name" required><br>
-  <input name="entry.2143103820" placeholder="Email" type="email" required><br>
-  
-  <select name="entry.1063457389" required>
-    <option value="">Select Batch</option>
-    <option value="Karmveer">Karmveer</option>
-    <option value="Achiever">Achiever</option>
-  </select><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Custom Google Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      background: #f7f7f7;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .message {
+      text-align: center;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
 
-  <input name="entry.2093457650" type="date" required><br>
+  <form id="testForm">
+    <h2>Test Submission Form</h2>
 
-  <select name="entry.1127009484" required>
-    <option value="">Select Subject</option>
-    <option value="Accounts">Accounts</option>
-    <option value="Law">Law</option>
-    <option value="Costing">Costing</option>
-  </select><br>
+    <input name="entry.1279474398" placeholder="Your Name" required />
 
-  <button type="submit">Submit</button>
-</form>
+    <input name="entry.2143103820" placeholder="Your Email" type="email" required />
 
-<script>
-document.getElementById('testForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const form = e.target;
-  const data = new FormData(form);
+    <select name="entry.1063457389" required>
+      <option value="">Select Batch</option>
+      <option value="Karmveer">Karmveer</option>
+      <option value="Achiever">Achiever</option>
+    </select>
 
-  fetch('https://docs.google.com/forms/d/e/1FAIpQLScwG_h8GSuhftfuoXAnY01p0BSktz6VPwCYVX0dtANoYWat5w/formResponse', {
-    method: 'POST',
-    mode: 'no-cors',
-    body: data
-  }).then(() => {
-    alert('Submitted successfully!');
-    form.reset();
-  }).catch(() => {
-    alert('Failed to submit');
-  });
-});
-</script>
+    <input name="entry.2093457650" type="date" required />
+
+    <select name="entry.1127009484" required>
+      <option value="">Select Subject</option>
+      <option value="Accounts">Accounts</option>
+      <option value="Law">Law</option>
+      <option value="Costing">Costing</option>
+    </select>
+
+    <button type="submit">Submit</button>
+
+    <div class="message" id="responseMessage"></div>
+  </form>
+
+  <script>
+    document.getElementById('testForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const form = e.target;
+      const data = new FormData(form);
+
+      fetch('https://docs.google.com/forms/d/e/1FAIpQLScwG_h8GSuhftfuoXAnY01p0BSktz6VPwCYVX0dtANoYWat5w/formResponse', {
+        method: 'POST',
+        mode: 'no-cors',
+        body: data
+      }).then(() => {
+        document.getElementById('responseMessage').innerText = "✅ Form submitted successfully!";
+        form.reset();
+      }).catch(() => {
+        document.getElementById('responseMessage').innerText = "❌ Submission failed. Please try again.";
+      });
+    });
+  </script>
+
+</body>
+</html>
