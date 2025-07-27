@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Answer Copy Submission</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 320px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+    #responseMsg {
+      margin-top: 10px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <form id="submissionForm">
+    <h3>Submit Answer Copy Info</h3>
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Your Email" required />
+    <input type="text" name="batch" placeholder="Batch (e.g. Karmveer)" required />
+    <input type="date" name="testDate" required />
+    <input type="text" name="subject" placeholder="Subject" required />
+    <button type="submit">Submit</button>
+    <p id="responseMsg"></p>
+  </form>
+
+  <script>
+    const form = document.getElementById("submissionForm");
+    const responseMsg = document.getElementById("responseMsg");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        name: form.name.value,
+        email: form.email.value,
+        batch: form.batch.value,
+        testDate: form.testDate.value,
+        subject: form.subject.value
+      };
+
+      try {
+        const response = await fetch("YOUR_WEB_APP_URL", {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: { "Content-Type": "application/json" }
+        });
+
+        const result = await response.json();
+        if (result.status === "success") {
+          responseMsg.textContent = "Form submitted successfully!";
+          form.reset();
+        } else {
+          responseMsg.textContent = "Submission failed. Try again.";
+        }
+      } catch (error) {
+        responseMsg.textContent = "Error: " + error;
+      }
+    });
+  </script>
+</body>
+</html>
