@@ -49,7 +49,7 @@
   </form>
 
 <script>
-document.getElementById("submitBtn").addEventListener("click", function (e) {
+document.getElementById("testForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
   const formData = {
@@ -71,7 +71,7 @@ document.getElementById("submitBtn").addEventListener("click", function (e) {
     .then((data) => {
       if (data.status === "success") {
         alert("Form submitted successfully!");
-        document.getElementById("studentForm").reset();
+        document.getElementById("testForm").reset();
       } else {
         alert("Error: " + data.message);
       }
@@ -81,6 +81,7 @@ document.getElementById("submitBtn").addEventListener("click", function (e) {
     });
 });
 </script>
+
 
 </body>
 </html>
