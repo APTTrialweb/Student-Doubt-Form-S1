@@ -46,7 +46,7 @@
     <h3>Submit Answer Copy Info</h3>
     <input type="text" name="name" placeholder="Your Name" required />
     <input type="email" name="email" placeholder="Your Email" required />
-    <input type="text" name="batch" placeholder="Batch (e.g. Karmveer)" required />
+    <input type="text" name="batch" placeholder="Batch (e.g. CA Inter 2025)" required />
     <input type="date" name="testDate" required />
     <input type="text" name="subject" placeholder="Subject" required />
     <button type="submit">Submit</button>
@@ -68,7 +68,7 @@
       };
 
       try {
-        const response = await fetch("YOUR_WEB_APP_URL", {
+        const response = await fetch("https://script.google.com/macros/s/AKfycbwWn_ceXxB6f2Q-ST1Fkq_nzDEFgr6pth-yro0hT6nJTTWw15SdSbSoeyP3f0ungWTQ/exec", {
           method: "POST",
           body: JSON.stringify(data),
           headers: { "Content-Type": "application/json" }
