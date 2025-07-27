@@ -39,11 +39,11 @@
 
   <form id="testForm">
     <h2>Submit Your Test Details</h2>
-    <input type="text" name="name" placeholder="Your Name" required />
-    <input type="email" name="email" placeholder="Your Email" required />
-    <input type="text" name="batch" placeholder="Batch Name" required />
-    <input type="date" name="testDate" placeholder="Test Date" required />
-    <input type="text" name="subject" placeholder="Subject" required />
+    <input type="text" id="name" placeholder="Your Name" required />
+    <input type="email" id="email" placeholder="Your Email" required />
+    <input type="text" id="batch" placeholder="Batch Name" required />
+    <input type="date" id="testDate" placeholder="Test Date" required />
+    <input type="text" id="subject" placeholder="Subject" required />
     <button type="submit">Submit</button>
     <p id="message"></p>
   </form>
@@ -69,19 +69,22 @@ document.getElementById("testForm").addEventListener("submit", function (e) {
   })
     .then((res) => res.json())
     .then((data) => {
+      const msg = document.getElementById("message");
       if (data.status === "success") {
-        alert("Form submitted successfully!");
+        msg.textContent = "Form submitted successfully!";
+        msg.className = "success";
         document.getElementById("testForm").reset();
       } else {
-        alert("Error: " + data.message);
+        msg.textContent = "Error: " + data.message;
+        msg.className = "error";
       }
     })
     .catch((err) => {
-      alert("Submission failed: " + err);
+      document.getElementById("message").textContent = "Submission failed: " + err;
+      document.getElementById("message").className = "error";
     });
 });
 </script>
-
 
 </body>
 </html>
