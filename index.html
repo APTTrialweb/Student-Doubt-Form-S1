@@ -2,38 +2,88 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Custom Submission</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-p1CmZfvQHQiL2Qb5xyZ1zKWhXpT+DFTL3GvQ3czS8ClMw+OShXFoWZ7czYGVZ+Q55K2JeGax+rIS7GmXVD/ltQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>APT Sheet Submission</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <style>
+    :root {
+      --bg: #f7f7f7;
+      --text: #000;
+      --form-bg: #fff;
+      --input-bg: #fff;
+      --border: #ccc;
+      --btn-bg: #4CAF50;
+    }
+
+    body.dark {
+      --bg: #121212;
+      --text: #fff;
+      --form-bg: #1e1e1e;
+      --input-bg: #2a2a2a;
+      --border: #555;
+      --btn-bg: #66bb6a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: Arial, sans-serif;
-      background: #f7f7f7;
-      padding: 30px;
+      background: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+      transition: 0.3s;
     }
+
     .container {
       text-align: center;
       margin-bottom: 20px;
     }
+
     .container img {
-      width: 80px;
+      width: 70px;
     }
+
     .container h2 {
       color: red;
+      font-size: 1.3rem;
       margin-top: 10px;
     }
+
+    .theme-toggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ddd;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
     form {
-      background: white;
+      background: var(--form-bg);
       padding: 20px;
       border-radius: 8px;
       max-width: 400px;
       margin: auto;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      transition: 0.3s;
     }
+
     .input-group {
       position: relative;
       margin: 10px 0;
     }
+
     .input-group i {
       position: absolute;
       left: 10px;
@@ -41,30 +91,60 @@
       transform: translateY(-50%);
       color: gray;
     }
+
     .input-group input {
       width: 100%;
       padding: 10px 10px 10px 35px;
-      border: 1px solid #ccc;
+      background: var(--input-bg);
+      color: var(--text);
+      border: 1px solid var(--border);
       border-radius: 4px;
+      font-size: 1rem;
     }
+
     button {
       width: 100%;
-      padding: 10px;
-      background: #4CAF50;
+      padding: 12px;
+      background: var(--btn-bg);
       color: white;
       border: none;
       border-radius: 4px;
       margin-top: 15px;
-      font-size: 16px;
+      font-size: 1rem;
       cursor: pointer;
+    }
+
+    @media (max-width: 480px) {
+      .container h2 {
+        font-size: 1.1rem;
+      }
+
+      .input-group input {
+        font-size: 0.95rem;
+        padding-left: 30px;
+      }
+
+      button {
+        font-size: 0.95rem;
+        padding: 10px;
+      }
+
+      .theme-toggle {
+        top: 5px;
+        right: 5px;
+        padding: 5px 8px;
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
 <body>
 
+<button class="theme-toggle" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+
 <div class="container">
-  <img src="https://apt.shiksha/_next/image?url=%2Fimages%2Flogo-dark.png&w=256&q=75" alt="APT Logo"> <!-- Replace with your logo URL -->
-  <h2>APT Study - Answer Sheet Submission Online Form</h2>
+  <img src="https://i.ibb.co/y5sWyv6/apt-logo.png" alt="APT Logo">
+  <h2>APT Study - Sheet Submission Info Form</h2>
 </div>
 
 <form id="myForm">
@@ -92,40 +172,61 @@
 </form>
 
 <script>
+  // Theme toggle
+  function toggleDarkMode() {
+    document.body.classList.toggle('dark');
+    const btn = document.querySelector('.theme-toggle');
+    btn.innerText = document.body.classList.contains('dark') ? '☀️ Light Mode' : '🌙 Dark Mode';
+  }
+
+  // Submission with confirmation
   document.getElementById("myForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const form = e.target;
-    const data = new FormData();
 
-    data.append("entry.1572605353", form.name.value);
-    data.append("entry.804969208", form.email.value);
-    data.append("entry.388045439", form.batch.value);
-    data.append("entry.2024250987", form.testDate.value);
-    data.append("entry.151700568", form.subject.value);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to submit the form?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonColor: '#4CAF50',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Submit',
+      cancelButtonText: 'Cancel'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const data = new FormData();
+        data.append("entry.1572605353", form.name.value);
+        data.append("entry.804969208", form.email.value);
+        data.append("entry.388045439", form.batch.value);
+        data.append("entry.2024250987", form.testDate.value);
+        data.append("entry.151700568", form.subject.value);
 
-    fetch("https://docs.google.com/forms/d/e/1FAIpQLScwG_h8GSuhftfuoXAnY01p0BSktz6VPwCYVX0dtANoYWat5w/formResponse", {
-      method: "POST",
-      mode: "no-cors",
-      body: data
-    })
-      .then(() => {
-        Swal.fire({
-          icon: 'success',
-          title: '✅ Submitted!',
-          text: 'Form submitted successfully.',
-          confirmButtonColor: '#4CAF50'
+        fetch("https://docs.google.com/forms/d/e/1FAIpQLScwG_h8GSuhftfuoXAnY01p0BSktz6VPwCYVX0dtANoYWat5w/formResponse", {
+          method: "POST",
+          mode: "no-cors",
+          body: data
+        })
+        .then(() => {
+          Swal.fire({
+            icon: 'success',
+            title: '✅ Submitted!',
+            text: 'Form submitted successfully.',
+            confirmButtonColor: '#4CAF50'
+          });
+          form.reset();
+        })
+        .catch((error) => {
+          Swal.fire({
+            icon: 'error',
+            title: '❌ Failed!',
+            text: 'Something went wrong. Please try again.',
+            confirmButtonColor: '#d33'
+          });
+          console.error("Error!", error.message);
         });
-        form.reset();
-      })
-      .catch((error) => {
-        Swal.fire({
-          icon: 'error',
-          title: '❌ Failed!',
-          text: 'Something went wrong. Please try again.',
-          confirmButtonColor: '#d33'
-        });
-        console.error("Error!", error.message);
-      });
+      }
+    });
   });
 </script>
 
